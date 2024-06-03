@@ -1,18 +1,9 @@
 package com.jorgesanaguaray.consumeapijetpackcomposetutorial.di
 
 import com.google.gson.GsonBuilder
-import com.jorgesanaguaray.consumeapijetpackcomposetutorial.data.remote.AccountApi
-import com.jorgesanaguaray.consumeapijetpackcomposetutorial.data.remote.LocationApi
-import com.jorgesanaguaray.consumeapijetpackcomposetutorial.data.remote.RouteApi
-import com.jorgesanaguaray.consumeapijetpackcomposetutorial.data.remote.RouteService
-import com.jorgesanaguaray.consumeapijetpackcomposetutorial.data.remote.VehicleApi
-import com.jorgesanaguaray.consumeapijetpackcomposetutorial.domain.GetVehiclesUseCase
-import com.jorgesanaguaray.consumeapijetpackcomposetutorial.domain.GetAccountsUseCase
-import com.jorgesanaguaray.consumeapijetpackcomposetutorial.domain.GetRoutesUseCase
-import com.jorgesanaguaray.consumeapijetpackcomposetutorial.repo.AccountRepository
-import com.jorgesanaguaray.consumeapijetpackcomposetutorial.repo.RouteRepository
-import com.jorgesanaguaray.consumeapijetpackcomposetutorial.repo.VehicleRepository
-import com.jorgesanaguaray.consumeapijetpackcomposetutorial.ui.home.HomeViewModelFactory
+import com.jorgesanaguaray.consumeapijetpackcomposetutorial.data.remote.VideoApi
+import com.jorgesanaguaray.consumeapijetpackcomposetutorial.domain.GetVideosUseCase
+import com.jorgesanaguaray.consumeapijetpackcomposetutorial.repo.VideoRepository
 import com.jorgesanaguaray.consumeapijetpackcomposetutorial.util.Constants.Companion.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -20,7 +11,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import javax.inject.Singleton
 
 /**
@@ -42,56 +32,20 @@ object RetrofitModule {
             .build()
     }
 
-
-    @Singleton
-    @Provides
-    fun provideVehicleApi(retrofit: Retrofit): VehicleApi {
-        return retrofit.create(VehicleApi::class.java)
-    }
-
-    @Singleton
-    @Provides
-    fun provideAccountApi(retrofit: Retrofit): AccountApi {
-        return retrofit.create(AccountApi::class.java)
-    }
-
     @Provides
     @Singleton
-    fun provideRouteApi(retrofit: Retrofit): RouteApi {
-        return retrofit.create(RouteApi::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideLocationApi(retrofit: Retrofit): LocationApi{
-        return retrofit.create(LocationApi::class.java)
+    fun provideVideoApi(retrofit: Retrofit): VideoApi{
+        return retrofit.create(VideoApi::class.java)
     }
 
 
     @Singleton
     @Provides
-    fun provideHomeViewModelFactory(getVehiclesUseCase: GetVehiclesUseCase): HomeViewModelFactory {
-        return HomeViewModelFactory(getVehiclesUseCase)
+    fun provideGetVideosUseCase(videoRepository : VideoRepository): GetVideosUseCase {
+        return GetVideosUseCase(videoRepository)
     }
 
 
-    @Singleton
-    @Provides
-    fun provideLoginAccountsUseCase(accountRepository: AccountRepository): GetAccountsUseCase {
-        return GetAccountsUseCase(accountRepository)
-    }
-
-    @Singleton
-    @Provides
-    fun provideGetVehiclesUseCase(vehicleRepository: VehicleRepository): GetVehiclesUseCase {
-        return GetVehiclesUseCase(vehicleRepository)
-    }
-
-    @Provides
-    @Singleton
-    fun provideGetRoutesUseCase(routeRepository: RouteRepository): GetRoutesUseCase {
-        return GetRoutesUseCase(routeRepository)
-    }
 
 
 
